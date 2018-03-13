@@ -40,11 +40,13 @@ public class DBHelper {
         }
     }
 
-    public static <T> List<T> getList(Criteria cr) {
+    public static <T> List<T> getAll(String className) {
+        session = HibernateUtil.getSessionFactory().openSession();
         List<T> results = null;
         try {
             transaction = session.beginTransaction();
-            results = cr.list();
+            String hql = "from " + className;
+            results = session.createQuery(hql).list();
             transaction.commit();
         } catch (HibernateException ex) {
             transaction.rollback();
@@ -55,3 +57,4 @@ public class DBHelper {
         return results;
     }
 }
+
