@@ -9,7 +9,7 @@ import java.util.Set;
 public class Folder {
     private int id;
     private String title;
-//    private Set<File> files;
+    private Set<File> files;
 
     public Folder() {
     }
@@ -36,5 +36,14 @@ public class Folder {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "folder")
+    public Set<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<File> files) {
+        this.files = files;
     }
 }

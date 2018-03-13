@@ -11,16 +11,17 @@ public class File {
     private String name;
     private String extension;
     private int size;
-//    private Folder folder;
+    private Folder folder;
 
     public File() {
     }
 
-    public File(String name, String extension, int size) {
+    public File(String name, String extension, int size, Folder folder) {
 
         this.name = name;
         this.extension = extension;
         this.size = size;
+        this.folder = folder;
     }
 
     @Id
@@ -59,5 +60,15 @@ public class File {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    @OneToOne
+    @JoinColumn(name="folder_id", nullable = false)
+    public Folder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 }
