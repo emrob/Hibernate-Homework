@@ -1,16 +1,19 @@
 import db.DBHelper;
 import models.File;
 import models.Folder;
+import models.Owner;
 
 import java.util.List;
 
 public class Runner {
     public static void main(String[] args) {
 
-        Folder folder1 = new Folder("Documents");
+        Owner owner1 = new Owner("Emma", "emrob");
+
+        Folder folder1 = new Folder("Documents", owner1);
         DBHelper.save(folder1);
 
-        Folder folder2 = new Folder("Homework");
+        Folder folder2 = new Folder("Homework", owner1);
         DBHelper.save(folder2);
 
         File file1 = new File("CV", "txt", 500, folder1);
