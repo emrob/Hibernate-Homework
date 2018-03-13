@@ -1,6 +1,7 @@
 package db;
 
 import models.Folder;
+import models.Owner;
 import models.File;
 import org.apache.commons.collections.iterators.EmptyListIterator;
 import org.hibernate.Criteria;
@@ -95,6 +96,16 @@ public class DBHelper {
         List<File> results = null;
         Criteria cr = session.createCriteria(File.class);
         cr.add(Restrictions.eq("folder", folder));
+        results = getList(cr);
+        return results;
+    }
+
+    public static List<Folder> getFoldersByOwner(Owner owner){
+        session = HibernateUtil.getSessionFactory().openSession();
+        List<Folder> results = null;
+        Criteria cr = session.createCriteria(Folder.class);
+        cr.add(Restrictions.eq("owner", owner));
+        cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         results = getList(cr);
         return results;
     }

@@ -9,6 +9,7 @@ public class Runner {
     public static void main(String[] args) {
 
         Owner owner1 = new Owner("Emma", "emrob");
+        DBHelper.save(owner1);
 
         Folder folder1 = new Folder("Documents", owner1);
         DBHelper.save(folder1);
@@ -38,6 +39,7 @@ public class Runner {
         List<File> allFolders = DBHelper.getAll("Folder");
 
         List<File> results = DBHelper.getFilesByFolder(folder1);
+        List<Folder> ownersFolders = DBHelper.getFoldersByOwner(owner1);
     }
 }
 
