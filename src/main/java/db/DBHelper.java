@@ -1,9 +1,13 @@
 package db;
 
+import models.Folder;
+import models.File;
+import org.apache.commons.collections.iterators.EmptyListIterator;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -70,5 +74,31 @@ public class DBHelper {
         }
         return results;
     }
+
+    private static <T> List<T> getList(Criteria cr) {
+        List<T> results = null;
+        try {
+             transaction = session.beginTransaction();
+             results = cr.list();
+             transaction.commit();
+        } catch(HibernateException ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
+    public static List<File> getFilesByFolder(Folder folder){
+        session = HibernateUtil.getSessionFactory().openSession();
+        List<File> results = null;
+        Criteria cr = session.createCriteria(File.class);
+        cr.add(Restrictions.eq("folder", folder));
+        results = getList(cr);
+        return results;
+    }
+
+
 }
 
